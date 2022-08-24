@@ -21,7 +21,7 @@ async function createMessage({
   return result.rows[0];
 }
 
-function getRoomMessages(room_name) {
+async function getRoomMessages(room_name) {
   const cli = "SELECT * FROM messages WHERE room_name = $1";
   const result = await db.query(cli, [
     room_name,
@@ -29,7 +29,7 @@ function getRoomMessages(room_name) {
   return result.rows;
 }
 
-function deleteRoomMessages(room_name) {
+async function deleteRoomMessages(room_name) {
   const cli = "DELETE FROM messages WHERE room_name = $1";
   const result = await db.query(cli, [
     room_name,
