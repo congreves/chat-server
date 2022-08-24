@@ -7,9 +7,9 @@ const messageModel = require("./models/messages.model");
 const logMessages = require("./middelware/utils");
 const db = require("./config/db");
 
-const PORT = process.env.PORT;
+const port = process.env.PORT;
 
-const io = new Server(PORT, {
+const io = new Server(port, {
   cors: {
     origin: "*",
     methods: ["GET", "POST"],
