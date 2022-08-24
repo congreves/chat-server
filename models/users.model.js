@@ -1,44 +1,30 @@
 const db = require("../config/db");
 
-
-function createOne(id, username) {
-    const cli = "INSERT INTO users (id, username) VALUES ($1, $2)";
-    return db.query(cli, [id, username], (error, user) => {
-            if(error) {
-                console.error(error.message);
-          
-            }
-            return user;
-        })
-    
-
+async function createOne(id, username) {
+  const cli = "INSERT INTO users (id, username) VALUES ($1, $2)";
+  const result = await db.query(cli, [
+    id,
+    username,
+  ]);
+  return result.rows;
 }
 
-function getOne(id) {
-const cli = "SELECT * FROM users WHERE id =?"
-return db.query(cli, id, (error, user) => {
-        if (error) {
-            console.error(error.message);
-          
-        }
-        return user;
-
-})
+async function getOne(id) {
+  const cli = "SELECT * FROM users WHERE id = $1";
+  const result = await db.query(cli, [
+  id,
+  ]);
+  return result.rows[0];
 }
-function getAll() {
-    const cli = "SELECT * FROM users"
-    return db.query(cli, (error, user) => {
-            if (error) {
-                console.error(error.message);
-           
-            }
-            return user;
-     
-    })
-    }
+async function getAll() {
+  const cli = "SELECT * FROM users";
+  const result = await db.query(cli, [
+  ]);
+  return result.rows;
+}
 
 module.exports = {
-    createOne,
-    getOne,
-    getAll
-}
+  createOne,
+  getOne,
+  getAll,
+};

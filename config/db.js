@@ -1,15 +1,14 @@
 const { Client } = require("pg");
 
 const db = new Client({
-  connectionString: 
-  process.env.DATABASE_URL,
+  
   ssl: {
     rejectUnauthorized: false,
-    // Bör aldrig sättas till rejectUnauthorized i en riktig applikation
-    // https://stackoverflow.com/questions/63863591/is-it-ok-to-be-setting-rejectunauthorized-to-false-in-production-postgresql-conn
   },
+  connectionString: 
+  process.env.DATABASE_URL,
  });
-db.connect(); // Ansluter till Databasen med hjälp av connectionString'en
+db.connect(); 
 
 const room = `CREATE TABLE IF NOT EXISTS rooms (id SERIAL PRIMARY KEY, room_name TEXT UNIQUE)`;
 

@@ -1,57 +1,32 @@
 const db = require("../config/db");
 
-
-function createOne(name) {
-  const cli = "INSERT INTO rooms (room_name) VALUES (?)";
-  return db.query(cli, name, (error) => {
-      if (error) {
-        console.error(error.message);
-      
-      }
-      return name;
- 
-  });
+async function createOne(name) {
+  const cli = "INSERT INTO rooms (room_name) VALUES ($1)";
+  const result = await db.query(cli, [name]);
+  return result.rows[0];
 }
 
-function getOne(id) {
-  const cli = "SELECT * FROM rooms WHERE id = ?";
-  return db.query(cli, id, (error, room) => {
-      if (error) {
-        console.error(error.message);
-        
-      }
-      return room;
-  
-  });
+async function getOne(id) {
+  const cli = "SELECT * FROM rooms WHERE id = $1";
+  const result = await db.query(cli, [id]);
+  return result.rows[0];
 }
 
-function getAll() {
+async function getAll() {
   const cli = "SELECT * FROM rooms";
-  return db.query(cli, (error, room) => {
-      if (error) {
-        console.error(error.message);
-       
-      }
-      return room;
-
-  });
+  const result = await db.query(cli, []);
+  return result.rows;
 }
 
-function deleteOne(room_name) {
-  const cli = "DELETE FROM rooms WHERE room_name = ?";
-  return db.query(cli, room_name, (error) => {
-      if (error) {
-        console.error(error.message);
-      
-      }
-      return room_name;
- 
-  });
+async function deleteOne(room_name) {
+  const cli = "DELETE FROM rooms WHERE room_name = $1";
+  const result = await db.query(cli, [room_name]);
+  return result.rows[0];
 }
 
 module.exports = {
   createOne,
   getOne,
   getAll,
-  deleteOne
+  deleteOne,
 };
